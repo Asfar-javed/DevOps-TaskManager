@@ -5,14 +5,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: taskmanager-app
+    container_name: taskmanager-app-ci
     restart: always
     ports:
-      - "3100:3000"
+      - "3101:3000"
     env_file:
       - .env
     networks:
-      - app-network
+      - ci-network
     logging:
       driver: "json-file"
       options:
