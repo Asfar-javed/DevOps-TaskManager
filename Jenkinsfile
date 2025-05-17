@@ -1,26 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        MONGO_URI = credentials('MONGO_URI')
-        PORT = credentials('PORT')
-    }
-
     stages {
         stage('Checkout SCM') {
             steps {
                 git url: 'https://github.com/Asfar-javed/DevOps-TaskManager.git', branch: 'main'
-            }
-        }
-
-        stage('Create .env file') {
-            steps {
-                script {
-                    writeFile file: '.env', text: """
-MONGO_URI=${env.MONGO_URI}
-PORT=${env.PORT}
-"""
-                }
             }
         }
 
