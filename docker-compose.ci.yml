@@ -20,5 +20,5 @@ services:
         max-file: "3"
 
 networks:
-  app-network:
+  ci-network:
     driver: bridge
