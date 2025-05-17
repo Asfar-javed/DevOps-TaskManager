@@ -37,7 +37,7 @@ pipeline {
 
         stage('Build & Run CI Container') {
             steps {
-                sh 'docker-compose -p ecommerce_pipeline -f docker-compose.ci.yml up -d --build'
+                sh 'docker compose -p ecommerce_pipeline -f docker-compose.ci.yml up -d --build'
             }
         }
     }
