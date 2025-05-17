@@ -16,22 +16,17 @@ pipeline {
         stage('Create .env file') {
             steps {
                 script {
-                    sh '''
-                        cat > .env << EOF
-                        MONGO_URI = credentials('MONGO_URI')
-                        PORT = credentials('PORT')
-                        EOF
-                    '''
+                    writeFile file: '.env', text: """
+MONGO_URI=${env.MONGO_URI}
+PORT=${env.PORT}
+"""
                 }
             }
         }
 
         stage('Clean up CI container') {
             steps {
-                // Remove only the CI container, not production (Part-I)
-                sh '''
-                    docker rm -f taskmanager-app-ci || true
-                '''
+                sh 'docker rm -f taskmanager-app-ci || true'
             }
         }
 
