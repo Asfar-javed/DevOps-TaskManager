@@ -1,18 +1,20 @@
-# Use official Node.js image
-FROM node:18-alpine
+FROM node:20-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
 COPY package*.json ./
-RUN npm install
-
-# Copy the rest of the app files
+RUN npm ci --omit=dev
 COPY . .
 
-# Expose app port
+
+RUN chown -R node:node /app && chmod -R 755 /app
+
+RUN npm install pm2 -g
+
+COPY ecosystem.config.js .
+
+USER node
+
 EXPOSE 3000
 
-# Start the application
-CMD ["node", "app.js"]
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]
